@@ -36,7 +36,7 @@ date_keys as (
 
 ),
 
-extracted as (
+extracted as (`
 
     select
         symbol,

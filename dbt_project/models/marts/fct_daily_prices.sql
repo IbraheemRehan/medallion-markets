@@ -58,12 +58,13 @@ joined as (
         company_history.dbt_valid_to as company_info_valid_to
     from prices
     left join company_history
-        on prices.symbol = company_history.ticker
-        and prices.price_date >= date(company_history.effective_valid_from)
-        and (
-            company_history.dbt_valid_to is null
-            or prices.price_date < date(company_history.dbt_valid_to)
-        )
+        on
+            prices.symbol = company_history.ticker
+            and prices.price_date >= date(company_history.effective_valid_from)
+            and (
+                company_history.dbt_valid_to is null
+                or prices.price_date < date(company_history.dbt_valid_to)
+            )
 
 )
 
