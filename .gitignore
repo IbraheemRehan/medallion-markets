@@ -1,0 +1,14 @@
+.env
+data/raw/*
+!data/raw/.gitkeep
+__pycache__/
+*.pyc
+*.json
+!package.json
+profiles.yml
+profiles.yaml
+dbt_packages/
+target/
+logs/
+.tmp_dagster_home*/
+*.log

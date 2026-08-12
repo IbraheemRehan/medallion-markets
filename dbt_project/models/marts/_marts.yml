@@ -1,0 +1,61 @@
+version: 2
+
+models:
+  - name: fct_daily_prices
+    description: "Daily stock prices joined to point-in-time company info."
+    columns:
+      - name: symbol
+        tests:
+          - not_null
+
+      - name: price_date
+        tests:
+          - not_null
+
+      - name: close_price
+        tests:
+          - not_null
+          - dbt_expectations.expect_column_values_to_be_between:
+              arguments:
+                min_value: 0
+                max_value: 100000
+              config:
+                severity: warn
+
+      - name: volume
+        tests:
+          - dbt_expectations.expect_column_values_to_be_between:
+              arguments:
+                min_value: 0
+                max_value: 10000000000
+              config:
+                severity: warn
+
+    tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns:
+              - symbol
+              - price_date
+
+      - dbt_expectations.expect_table_row_count_to_be_between:
+          arguments:
+            min_value: 1
+          config:
+            severity: error
+
+  - name: dim_company_overview_scd2
+    description: "SCD2 dimension tracking company info changes over time."
+    columns:
+      - name: ticker
+        tests:
+          - not_null
+
+      - name: market_cap
+        tests:
+          - dbt_expectations.expect_column_values_to_be_between:
+              arguments:
+                min_value: 0
+                max_value: 10000000000000
+              config:
+                severity: warn
