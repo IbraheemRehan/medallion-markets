@@ -1,18 +1,14 @@
-# Medallion Markets: Production-Grade Financial Data Lakehouse & Analytics Warehouse
+# Medallion Markets: Financial Data Lakehouse & Analytics Warehouse
 
-A modular, enterprise-ready data platform built on BigQuery, dbt, and Dagster. The platform ingests equities market data and company fundamentals from the Alpha Vantage API, lands raw payloads in a BigQuery **Bronze** layer, transforms data through an **SCD Type 2** dimension and point-in-time fact model via **dbt**, enforces strict data quality assertions using **dbt-expectations**, and orchestrates the end-to-end lineage graph using **Dagster**.
-
----
+An end-to-end data platform built on BigQuery, dbt, and Dagster. The platform ingests equities market data and company fundamentals from the Alpha Vantage API, lands raw payloads in a BigQuery **Bronze** layer, transforms data through an **SCD Type 2** dimension and point-in-time fact model via **dbt**, enforces strict data quality assertions using **dbt-expectations**, and orchestrates the end-to-end lineage graph using **Dagster**.
 
 ## Executive Summary
 
-The project demonstrates a production-standard Medallion Architecture (Bronze, Silver/Staging, Gold/Marts) designed for financial data processing. It solves core engineering challenges including non-destructive raw payload retention, dynamic JSON schema extraction, rate-limit failure isolation, point-in-time historical dimension tracking (SCD Type 2), and automated CI/CD validation.
+The project demonstrates a Medallion Architecture (Bronze, Silver/Staging, Gold/Marts) designed for financial data processing. It solves core engineering challenges including non-destructive raw payload retention, dynamic JSON schema extraction, rate-limit failure isolation, point-in-time historical dimension tracking (SCD Type 2), and automated CI/CD validation.
 
 <p align="center">
   <img src="docs/assets/architecture_pipeline_diagram.png" alt="System Architecture and Medallion Pipeline" width="750" />
 </p>
-
----
 
 ## Pipeline Architecture & Data Flow
 
