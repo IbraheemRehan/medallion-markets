@@ -5,9 +5,8 @@ An end-to-end data platform built on BigQuery, dbt, and Dagster. The platform in
 ## Executive Summary
 
 The project demonstrates a Medallion Architecture (Bronze, Silver/Staging, Gold/Marts) designed for financial data processing. It solves core engineering challenges including non-destructive raw payload retention, dynamic JSON schema extraction, rate-limit failure isolation, point-in-time historical dimension tracking (SCD Type 2), and automated CI/CD validation.
-
 <p align="center">
-  <img src="docs/assets/architecture_pipeline_diagram.png" alt="System Architecture and Medallion Pipeline" width="350" />
+  <img src="docs/assets/architecture_pipeline_diagram.png" alt="System Architecture and Medallion Pipeline" width="400" />
 </p>
 
 ## Pipeline Architecture & Data Flow
