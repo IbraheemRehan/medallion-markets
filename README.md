@@ -8,7 +8,9 @@ A modular, enterprise-ready data platform built on BigQuery, dbt, and Dagster. T
 
 The project demonstrates a production-standard Medallion Architecture (Bronze, Silver/Staging, Gold/Marts) designed for financial data processing. It solves core engineering challenges including non-destructive raw payload retention, dynamic JSON schema extraction, rate-limit failure isolation, point-in-time historical dimension tracking (SCD Type 2), and automated CI/CD validation.
 
-![System Architecture and Medallion Pipeline](docs/assets/architecture_pipeline_diagram.png)
+<p align="center">
+  <img src="docs/assets/architecture_pipeline_diagram.png" alt="System Architecture and Medallion Pipeline" width="750" />
+</p>
 
 ---
 
@@ -92,7 +94,9 @@ The pipeline enforces data integrity across staging and mart layers using generi
 
 Dagster manages the execution pipeline via `@dbt_assets` and `@multi_asset` definitions, producing a fully connected DAG:
 
-![Dagster Asset Lineage Graph](docs/assets/dagster_lineage_graph_diagram.png)
+<p align="center">
+  <img src="docs/assets/dagster_lineage_graph_diagram.png" alt="Dagster Asset Lineage Graph" width="750" />
+</p>
 
 ### Dagster Implementation Details
 - **`DbtProject` & `DbtCliResource`**: Directly references `dbt_project/target/manifest.json`.
