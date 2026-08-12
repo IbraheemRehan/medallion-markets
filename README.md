@@ -8,34 +8,7 @@ A modular, enterprise-ready data platform built on BigQuery, dbt, and Dagster. T
 
 The project demonstrates a production-standard Medallion Architecture (Bronze, Silver/Staging, Gold/Marts) designed for financial data processing. It solves core engineering challenges including non-destructive raw payload retention, dynamic JSON schema extraction, rate-limit failure isolation, point-in-time historical dimension tracking (SCD Type 2), and automated CI/CD validation.
 
-```
-                  +-----------------------------------+
-                  |        Alpha Vantage API          |
-                  +-----------------------------------+
-                                    |
-                                    v (Python Ingestion)
-                  +-----------------------------------+
-                  |     Raw Local Payload Store       |
-                  +-----------------------------------+
-                                    |
-                                    v (BigQuery Append/Truncate Jobs)
-+----------------------------------------------------------------------------------+
-| BRONZE LAYER                                                                     |
-|   raw_overview                       raw_time_series_daily                       |
-+----------------------------------------------------------------------------------+
-                                    |
-                                    v (dbt Staging Models)
-+----------------------------------------------------------------------------------+
-| STAGING LAYER (SILVER)                                                           |
-|   stg_overview                       stg_daily_prices                            |
-+----------------------------------------------------------------------------------+
-                                    |
-                                    v (Window Functions & Point-in-Time Join)
-+----------------------------------------------------------------------------------+
-| MARTS LAYER (GOLD)                                                               |
-|   dim_company_overview_scd2 (SCD2)   fct_daily_prices (Point-in-Time Fact)       |
-+----------------------------------------------------------------------------------+
-```
+![System Architecture and Medallion Pipeline](docs/assets/architecture_pipeline_diagram.png)
 
 ---
 
@@ -119,25 +92,7 @@ The pipeline enforces data integrity across staging and mart layers using generi
 
 Dagster manages the execution pipeline via `@dbt_assets` and `@multi_asset` definitions, producing a fully connected DAG:
 
-```
-[ raw_stock_files ] (Python Fetcher Asset)
-        |
-        v
-[ bronze_tables ] (Multi-Asset: overview, time_series_daily)
-        |
-        +----------------------------+
-        |                            |
-        v                            v
-[ stg_overview ]            [ stg_daily_prices ]
-        |                            |
-        v                            |
-[ dim_company_overview_scd2 ]        |
-        |                            |
-        +-------------+--------------+
-                      |
-                      v
-             [ fct_daily_prices ]
-```
+![Dagster Asset Lineage Graph](docs/assets/dagster_lineage_graph_diagram.png)
 
 ### Dagster Implementation Details
 - **`DbtProject` & `DbtCliResource`**: Directly references `dbt_project/target/manifest.json`.
@@ -186,6 +141,10 @@ warehouse_project/
 │   ├── dbt_project.yml           # dbt project configurations
 │   ├── package-lock.yml
 │   └── packages.yml              # Dependencies (dbt-utils, dbt-expectations)
+├── docs/
+│   └── assets/                   # Architecture and lineage visual diagrams
+│       ├── architecture_pipeline_diagram.png
+│       └── dagster_lineage_graph_diagram.png
 ├── scripts/
 │   ├── fetch_stock_data.py       # API extraction script
 │   └── load_to_bronze.py         # BigQuery bronze loader
