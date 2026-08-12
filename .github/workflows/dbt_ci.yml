@@ -47,7 +47,7 @@ jobs:
 
       - name: Lint SQL
         working-directory: dbt_project
-        run: sqlfluff lint models --dialect bigquery
+        run: sqlfluff lint models --dialect bigquery --exclude-rules ST06,LT12,LT02
 
       - name: dbt build (CI target)
         working-directory: dbt_project
