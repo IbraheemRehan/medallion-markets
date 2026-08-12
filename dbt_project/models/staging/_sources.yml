@@ -1,5 +1,6 @@
 version: 2
 
+# Alpha Vantage Bronze Sources
 sources:
   - name: bronze
     database: "{{ env_var('BQ_PROJECT_ID', 'roycethreads-email') }}"
